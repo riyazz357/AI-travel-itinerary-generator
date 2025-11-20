@@ -52,7 +52,7 @@ def generate_itinerary(source: str, destination: str, start_date: str, end_date:
     try:
         # (Re)configure in case the process started before the key was available
         genai.configure(api_key=_api_key)
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        model = genai.GenerativeModel("gemini-2.0-flash")
         response = model.generate_content(prompt)
         text = getattr(response, "text", "")
         if not text:

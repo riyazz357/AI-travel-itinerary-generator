@@ -1,150 +1,140 @@
 {% extends "headers.html" %}
 {% block content %}
+    <!-- Main Content -->
+    
 
-<main>
-    <div class="container">
-        <div class="row mb-4">
-            <div class="col text-center">
-                <h1>Travel Itinerary Generator</h1>
-                <p class="lead">Fill in your preferences to generate a personalized travel plan.</p>
-            </div>
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h1 class="text-center">Travel Itinerary Generator</h1>
+          </div>
         </div>
+      <!--
+      DESCRIPTION: This code block contains a form that allows users to input their boarding point, destination, and date of travel. 
+      The form has a submit button that sends the user's input to the server for processing.
+      -->
+      <form action="/" method="POST" class="form-inline">
+        <div class="form-group">
+          <label for="source">From:</label>
+          <input
+            type="text"
+            class="form-control"
+            name="source"
+            id="source"
+            placeholder="Enter your boarding point"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="destination">To:</label>
+          <input
+            type="text"
+            class="form-control"
+            name="destination"
+            id="destination"
+            placeholder="Enter your destination"
+            required
+          />
+        </div>
+        <span class="form-group">
+          <label for="date">Travel Date:</label>
+          <input type="date" class="form-control" name="date" id="date"required/>
+          <label for="return">Return Date:</label>
+          <input type="date" class="form-control" name="return" id="return" required/>
+        </span>
+        
+        
 
-        <form action="/" method="POST">
-            <div class="row">
-                <div class="form-group col-md-6 mb-3">
-                    <label for="source">From:</label>
-                    <input type="text" class="form-control" name="source" id="source" placeholder="E.g., Mumbai" required>
-                </div>
-                <div class="form-group col-md-6 mb-3">
-                    <label for="destination">To:</label>
-                    <input type="text" class="form-control" name="destination" id="destination" placeholder="E.g., Paris" required>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-6 mb-3">
-                    <label for="date">Travel Date:</label>
-                    <input type="date" class="form-control" name="date" id="date" required>
-                </div>
-                <div class="form-group col-md-6 mb-3">
-                    <label for="return">Return Date:</label>
-                    <input type="date" class="form-control" name="return" id="return" required>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-6 mb-3">
-                    <label for="adults">Adults</label>
-                    <input type="number" class="form-control" id="adults" name="adults" min="1" value="1">
-                </div>
-                <div class="form-group col-md-6 mb-3">
-                    <label for="children">Children</label>
-                    <input type="number" class="form-control" id="children" name="children" min="0" value="0">
-                </div>
-            </div>
-
-            <div class="form-group mb-3">
-                <label>Budget</label><br>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="budget" id="budget_low" value="low" checked>
-                    <label class="form-check-label" for="budget_low">Budget</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="budget" id="budget_mid" value="mid">
-                    <label class="form-check-label" for="budget_mid">Mid-Range</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="budget" id="budget_high" value="high">
-                    <label class="form-check-label" for="budget_high">Luxury</label>
-                </div>
-            </div>
-
-            <div class="form-group mb-3">
-                <label>Interests</label><br>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="interests" id="interest_adventure" value="adventure">
-                    <label class="form-check-label" for="interest_adventure">Adventure</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="interests" id="interest_culture" value="culture">
-                    <label class="form-check-label" for="interest_culture">Culture</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="interests" id="interest_food" value="food">
-                    <label class="form-check-label" for="interest_food">Foodie</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="interests" id="interest_relaxation" value="relaxation">
-                    <label class="form-check-label" for="interest_relaxation">Relaxation</label>
-                </div>
-            </div>
-
+        <button style="margin-top: 5px; padding: 4px;" type="submit" class="btn btn-primary">Submit</button>
+        
+          <div  class="container d-flex justify-content-center align-items-center">
             <div class="text-center">
-                <button type="submit" id="submit-button" class="btn btn-primary mt-3">Generate Itinerary</button>
-                <div class="mt-3">
-                    <img id="loading" style="display: none;" src="{{url_for('static',filename='loading.gif')}}" alt="Loading..." />
-                </div>
+              <img id="loading"  style="display: none;" src="{{url_for('static',filename='loading.gif')}}" alt="Loading..." />
             </div>
-        </form>
-    </div>
-</main>
+          </div>
+ 
+      </form>
+    </main>
 
-<div class="floating-container">
-    <div class="floating-button">
-        <i class="fa-solid fa-share-from-square"></i>
-    </div>
-    <div class="element-container">
-        <a class="float-element" href="https://www.facebook.com/" target="_blank">
-            <span><i class="fa-brands fa-facebook"></i></span>
-        </a>
-        <a class="float-element" href="https://api.whatsapp.com/send?" target="_blank">
-            <span><i class="fa-brands fa-whatsapp"></i></span>
-        </a>
-        <a class="float-element" href="https://twitter.com/intent/tweet?" target="_blank">
-            <span><i class="fa-brands fa-x-twitter"></i></span>
-        </a>
-        <a class="float-element" href="https://www.linkedin.com/" target="_blank">
-            <span><i class="fa-brands fa-linkedin"></i></span>
-        </a>
-    </div>
-</div>
 
-<script>
-    // Get references to the DOM elements
-    const travelDateInput = document.getElementById('date');
-    const returnDateInput = document.getElementById('return');
-    const form = document.querySelector('form');
-    const submitButton = document.getElementById('submit-button');
-    const loadingGif = document.getElementById('loading');
+    
+    <!-- Share Icon -->
+    <div class="floating-container">
+      <div class="floating-button">
+          <i class="fa-solid fa-share-from-square"></i>
+      </div>
+      <!-- Elements -->
+      <div class="element-container">
+          <!-- Facebook -->
+          <a class="float-element" href="https://www.facebook.com/" target="_blank"> 
+              <span>
+              <i class="fa-brands fa-facebook"></i>
+          </a>
 
-    // --- Date Validation Logic ---
-    // Set the minimum selectable travel date to today
-    const today = new Date().toISOString().split('T')[0];
-    travelDateInput.setAttribute('min', today);
-    returnDateInput.setAttribute('min', today); // Also set min for return date initially
+          <!-- WhatsApp -->
+          </span>
+          <a class="float-element" href="https://api.whatsapp.com/send?" target="_blank">
+          <span>
+              <i class="fa-brands fa-whatsapp"></i>
+          </span>
+          </a>
 
-    // When the travel date changes, update the return date's minimum to prevent invalid ranges
-    travelDateInput.addEventListener('change', function() {
-        if (this.value) {
-            returnDateInput.setAttribute('min', this.value);
-            // If the current return date is before the new travel date, clear it
-            if (returnDateInput.value < this.value) {
-                returnDateInput.value = '';
-            }
-        }
-    });
+          <!-- Twitter or X -->
+          <a class="float-element" href="https://twitter.com/intent/tweet?" target="_blank">
+          <span>
+              <i class="fa-brands fa-x-twitter"></i>
+          </span>
+          </a>
 
-    // --- Form Submission Logic ---
-    // Handle the loading state when the user submits the form
-    form.addEventListener('submit', function() {
-        // Show the loading GIF
-        loadingGif.style.display = 'block';
+          <!-- LinkedIn -->
+          <a class="float-element" href="https://www.linkedin.com/" target="_blank">
+          <span >
+              <i class="fa-brands fa-linkedin"></i>
+          </span>
+          </a>
 
-        // Disable the button and change its text to provide feedback
-        submitButton.disabled = true;
-        submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Generating...';
-    });
-</script>
+          
+      </div>
+  </div>
 
-{% endblock %}
+    <!-- Footer -->
+
+    
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- 
+    This script sets a timeout function to remove all elements with the class "alert" after a certain duration. 
+    It first sets the opacity of the elements to 0 to initiate the transition, and then removes the elements after the transition duration. 
+    The delay for the transition duration can be adjusted by changing the value of the second setTimeout function. 
+    -->
+    <script>
+      setTimeout(function () {
+        const alerts = document.querySelectorAll(".alert");
+
+        alerts.forEach(function (alert) {
+          // Set opacity to 0 to initiate the transition
+          alert.style.opacity = 0;
+        });
+
+        // After the transition duration, remove the alert elements
+        setTimeout(function () {
+          alerts.forEach(function (alert) {
+            alert.style.display = "none";
+          });
+        }, 1000); // Adjust this delay to match your transition duration (in this case, 1 second)
+      }, 5000); // Adjust this delay to match your transition duration (in this case, 3 seconds)
+
+      // Load the loading gif on click or enter of submit button in form
+      document.querySelector('form').addEventListener('submit', function() {
+        document.getElementById('loading').style.display = 'block';
+      });
+  </script>
+  
+    {% endblock %}
+    </body>
+</html>
